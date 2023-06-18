@@ -14,17 +14,18 @@ connectDB()
 
 
 /** load route files */
-// const userDetails = require('./routes/index')
+const userDetails = require('./routes/index')
 
 /** initilize express */
 const app = express();
 
 /** add body-parser to app.js */
-app.use(
-  cors({
-    origin: ['https://trabko.com', 'https://workdone.trabko.com'],
-  })
-)
+// app.use(
+//   cors({
+//     origin: ['https://trabko.com', 'https://workdone.trabko.com'],
+//   })
+// )
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(express.json());
@@ -34,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/')));
 
 /** Mount routers */
-// app.use('/api/v1/userDetails', userDetails);
+app.use('/api/v1/userDetails', userDetails);
 
 /** Check server is up */
 // app.get(`/api/v1/health-check`, (req, res) => {

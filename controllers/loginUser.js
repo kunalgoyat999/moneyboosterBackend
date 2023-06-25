@@ -1,11 +1,18 @@
 const Users = require('../models/Users');
 const asyncHandler = require('../middleware/async');
+const jwt = require('jsonwebtoken');
 
 /**
  * @description get user is premium or not
  * @route GET /api/v1/userDetails/findTokenDetails
  * @access  Public
  */
+ function generateToken(id) {
+    const payload = { userId: id };
+     console.log("id", id)
+
+    return jwt.sign(payload, "dkjsadkjasdklj");
+}
  exports.loginUser = asyncHandler(async (req, res) => {
      /** get data request body */
     const { 
@@ -21,9 +28,11 @@ const asyncHandler = require('../middleware/async');
             message: 'No user Found',
         });
     } else {
+        const token = generateToken(userDetails._id);
         res.status(200).send({
             success: true,
             userDetails: userDetails[0],
+            token: token
         });
     }
 });

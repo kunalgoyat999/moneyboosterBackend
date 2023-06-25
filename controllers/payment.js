@@ -5,13 +5,19 @@
     let crypto = require("crypto");
 
 
+
     // app.post("/pay", function (req, res) {
     let key = config.production.key; // production key
     let salt = config.production.salt; // production key
 
     exports.payment = asyncHandler(async (req, res) => {
-        console.log("data", req.body)
+        // let strdat = "";
 
+        // req.on("data", function (chunk) {
+        //     strdat += chunk;
+        //   });
+        
+        // req.on("end", function () {
           let data = req.body
           
           //generate hash with mandatory parameters and udf5
@@ -44,4 +50,5 @@
           let hash = cryp.digest("hex");
           console.log("hash", hash)
           res.end(JSON.stringify(hash));
+        // });
   });

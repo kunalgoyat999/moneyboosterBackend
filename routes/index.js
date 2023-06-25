@@ -5,6 +5,7 @@ const { loginUser } = require('../controllers/loginUser');
 const { postUserDetails } = require('../controllers/registerUser');
 const { homePage } = require('../controllers/homePage');
 const { payment } = require('../controllers/payment');
+const { forgotSendOtp } = require('../controllers/forgotSendOtp');
 
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.post('/postUserDetails', postUserDetails);
 
 router.get('/homePage', homePage);
 router.post('/hash', payment);
+router.post('/forgotSendOtp', forgotSendOtp);
 
 module.exports = router;

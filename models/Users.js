@@ -17,6 +17,15 @@ const UserSchema = new mongoose.Schema(
         password: {
             type: String,
         },
+        amounAdded: {
+            type: Number
+        },
+        amountWithraw: {
+            type: Number
+        },
+        amountToBeUse: {
+            type: Number
+        },
         accountNo: {
             type: String,
         },

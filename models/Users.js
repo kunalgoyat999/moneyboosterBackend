@@ -34,6 +34,15 @@ const UserSchema = new mongoose.Schema(
         },
         bankName: {
             type: String,
+        },
+        level1: {
+            type: Array
+        },
+        level2: {
+            type: Array
+        },
+        level3: {
+            type: Array
         }
     },
     { timestamps: true },

@@ -5,7 +5,7 @@ const asyncHandler = require('../middleware/async');
 exports.homePage = asyncHandler(async (req, res) => {
 
     const id = req.query.id;
-     const userDetails = await Users.findById(id);
+    const userDetails = await Users.findById(id);
 
     if(userDetails.length === 0) {
         res.status(400).send({

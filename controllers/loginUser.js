@@ -14,6 +14,7 @@ const jwt = require('jsonwebtoken');
     return jwt.sign(payload, "dkjsadkjasdklj");
 }
  exports.loginUser = asyncHandler(async (req, res) => {
+     console.log("dsd", req.query)
      /** get data request body */
     const { 
         email,

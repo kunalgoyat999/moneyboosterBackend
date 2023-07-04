@@ -9,8 +9,9 @@ const session = require("express-session");
 const cors = require('cors');
 const uniqid = require('uniqid'); 
 const config = require("./config/config");
-var crypto = require("crypto");
-
+let crypto = require("crypto");
+const Users = require("./models/Users");
+const request = require("request"); //required for verify payment
 
 /*** Connect to database */
 connectDB()
@@ -43,7 +44,7 @@ let salt = config.production.salt; // production key
 
 let ord = "ORD" + uniqid();
 app.get("/pay", function (req, res) {
-  console.log("heree")
+  console.log("heree", ord)
   // let ord = "ORD" + uniqid();
   res.render(__dirname + "/checkout1.html", { orderid: ord, key: key });
 });
@@ -53,20 +54,20 @@ app.get("/pay", function (req, res) {
 app.post("/pay", function (req, res) {
 
   console.log("heeeedssdsdsas", req.body)
-  var strdat = "";
+  let strdat = "";
 
   req.on("data", function (chunk) {
     strdat += chunk;
   });
   req.on("end", function () {
-    var data = JSON.parse(strdat);
+    let data = JSON.parse(strdat);
 
     //generate hash with mandatory parameters and udf5
-    var cryp = crypto.createHash("sha512");
+    let cryp = crypto.createHash("sha512");
     console.log("data", data)
 
     // "key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5|udf6|udf7|udf8|udf9|udf10";
-    var text =
+    let text =
       key +
       "|" +
       ord +
@@ -90,32 +91,31 @@ app.post("/pay", function (req, res) {
       console.log("text", text)
 
     cryp.update(text);
-    var hash = cryp.digest("hex");
+    let hash = cryp.digest("hex");
     res.end(JSON.stringify(hash));
   });
 }); 
 
 app.post("/response.html", async function (req, res) {
-  console.log("resquest", req.body)
-  var verified = "No";
-  var txnid = req.body.txnid;
-  var amount = req.body.amount;
-  var productinfo = req.body.productinfo;
-  var firstname = req.body.firstname;
-  var email = req.body.email;
-  var udf1 = req.body.udf1; // referral by
-  var udf2 = req.body.udf2; // number of questions
-  var udf5 = req.body.udf5;
-  var mihpayid = req.body.mihpayid;
-  var status = req.body.status;
-  var resphash = req.body.hash;
-  var txnDate = req.body.addedon;
-  var mode = req.body.mode;
-  var state = req.body.state;
-  var additionalcharges = "";
+  let verified = "No";
+  let txnid = req.body.txnid;
+  let amount = req.body.amount;
+  let productinfo = req.body.productinfo;
+  let firstname = req.body.firstname;
+  let email = req.body.email;
+  let udf1 = req.body.udf1; // referral by
+  let udf2 = req.body.udf2; // number of questions
+  let udf5 = req.body.udf5;
+  let mihpayid = req.body.mihpayid;
+  let status = req.body.status;
+  let resphash = req.body.hash;
+  let txnDate = req.body.addedon;
+  let mode = req.body.mode;
+  let state = req.body.state;
+  let additionalcharges = "";
 
   //Calculate response hash to verify
-  var keyString =
+  let keyString =
     key +
     "|" +
     txnid +
@@ -135,9 +135,9 @@ app.post("/response.html", async function (req, res) {
     udf5 +
     "|||||";
 
-  var keyArray = keyString.split("|");
-  var reverseKeyArray = keyArray.reverse();
-  var reverseKeyString = salt + "|" + status + "|" + reverseKeyArray.join("|");
+  let keyArray = keyString.split("|");
+  let reverseKeyArray = keyArray.reverse();
+  let reverseKeyString = salt + "|" + status + "|" + reverseKeyArray.join("|");
   //check for presence of additionalcharges parameter in response.
   if (typeof req.body.additionalCharges !== "undefined") {
     additionalcharges = req.body.additionalCharges;
@@ -146,10 +146,10 @@ app.post("/response.html", async function (req, res) {
   }
 
   //Generate Hash
-  var cryp = crypto.createHash("sha512");
+  let cryp = crypto.createHash("sha512");
   cryp.update(reverseKeyString);
-  var calchash = cryp.digest("hex");
-  var msg =
+  let calchash = cryp.digest("hex");
+  let msg =
     "Payment failed for Hash not verified...<br />Check Console Log for full response...";
   //Comapre status and hash. Hash verification is mandatory.
   if (calchash == resphash) {
@@ -160,14 +160,14 @@ app.post("/response.html", async function (req, res) {
 
 
   //Verify Payment routine to double check payment
-  var command = "verify_payment";
+  let command = "verify_payment";
 
-  var hash_str = key + "|" + command + "|" + txnid + "|" + salt;
-  var vcryp = crypto.createHash("sha512");
+  let hash_str = key + "|" + command + "|" + txnid + "|" + salt;
+  let vcryp = crypto.createHash("sha512");
   vcryp.update(hash_str);
-  var vhash = vcryp.digest("hex");
+  let vhash = vcryp.digest("hex");
 
-  var options = {
+  let options = {
     method: "POST",
     uri: config.production.uri,
     form: {
@@ -181,30 +181,48 @@ app.post("/response.html", async function (req, res) {
   // if isTrue ture means his transection is successfully completed.
   let isTrue;
 
-  // await request(options, (error, res, body) => {
-  //   if (error) {
-  //     loggerMongoDB.error(`pay40 -- request failed to stripe dashboard -- error -- ${error} -- `)
-  //     return console.error("upload failed:", error);
-  //   }
+  await request(options, (error, res, body) => {
+    if (error) {
+      // loggerMongoDB.error(`pay40 -- request failed to stripe dashboard -- error -- ${error} -- `)
+      return console.error("upload failed:", error);
+    }
 
-  //   if (res.statusCode == 200) {
-  //     return (isTrue = true);
-  //   }
-  // });
+    if (res.statusCode == 200) {
+      return (isTrue = true);
+    }
+  });
 
   if (status === "success") {
-    let str = resphash;
-    const token = str.substring(0, 40);
 
-    let questions = 0;
-    if (amount == 50 || amount == 500 || amount == 5000)  {
-      questions = 12;
-    } else if (amount == 100 || amount == 1000 || amount == 10000) {
-      questions = 30;
-    } else if (amount == 200 || amount == 2000 || amount == 20000) {
-      questions = 70;
-    } else if (amount == 400 || amount == 4000 || amount == 40000) {
-      questions = 150;
+    let emailUser = await Users.find({email: email});
+    console.log("emailUser", emailUser, typeof amount);
+    if (emailUser) {
+      let numberAmount = parseFloat(amount);
+
+       // Calculate the new amount
+      if(emailUser[0].amounAdded === undefined){
+        // Update the amountAdded field in the user document
+        emailUser = await Users.findOneAndUpdate(
+          { email: email },
+          { $set: { amounAdded: amount } },
+          { new: true }
+        );
+      } else {
+        let newAmount = parseFloat(emailUser[0].amounAdded);
+        console.log("newAmount1", newAmount)
+        newAmount +=+ numberAmount;
+        console.log("newAmount2", newAmount)
+        // Update the amountAdded field in the user document
+        emailUser = await Users.findOneAndUpdate(
+          { email: email },
+          { $set: { amounAdded: newAmount.toString() } },
+          { new: true }
+        );
+      }
+      
+
+    
+      console.log("Updated user:", emailUser);
     }
 
     // await fetch(`${config.production.baseUrl}/buyQuestions`, {

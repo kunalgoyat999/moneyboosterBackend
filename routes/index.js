@@ -15,8 +15,8 @@ router.get('/getUser', loginUser );
 router.post('/postUserDetails', postUserDetails);
 
 router.get('/homePage', homePage);
-router.post('/hash', payment);
-// router.get('/payment', paymentPage);
+router.post('/payment', payment);
+// router.post('/payment', paymentPage);
 router.post('/forgotSendOtp', forgotSendOtp);
 router.post('/refrel', refrel);
 

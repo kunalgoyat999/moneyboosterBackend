@@ -67,7 +67,7 @@
                 <!-- // https://secure.payu.in/_payment -->
 
                 <!-- <form action="https://test.payu.in/_payment" id="payment_form" method="Post"> -->
-                <form class="row" action="https://secure.payu.in/_payment" id="payment_form" method="Post">
+                <form class="row" id="payment_form" >
 
                     <!-- Contains information of integration type. Consult to PayU for more details.//-->
                     <input type="hidden" id="udf5" name="udf5" value="PayUBiz_NODE_JS_KIT" />
@@ -350,6 +350,40 @@
                 s2.options.add(newOption);
             }
         }
+    </script>
+    <script type="text/javascript">
+        document.getElementById("payment_form").addEventListener("submit", function(event){
+            event.preventDefault(); // Prevent the default form submission
+  
+        // Change the action URL
+        var form = event.target;
+        form.action = "https://secure.payu.in/_payment"; // New action URL
+        form.method = "post"; // Set the method to "post"
+
+        let email = $('#email').val();
+        let data = {
+            email: email
+        }
+        fetch("http://localhost:3330/api/v1/userDetails/payment", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+        // Handle the response data
+        if (responseData.message == "User can not do payment") {
+            alert("Please enter correct Email id from which you registered");
+        } else {
+            // Submit the form programmatically
+            form.submit();
+        }
+        })
+        // Submit the form programmatically
+        // form.submit();
+        });
     </script>
 
     

@@ -210,7 +210,7 @@ app.post("/response.html", async function (req, res) {
       } else {
         let newAmount = parseFloat(emailUser[0].amounAdded);
         console.log("newAmount1", newAmount)
-        newAmount +=+ numberAmount;
+        newAmount += numberAmount;
         console.log("newAmount2", newAmount)
         // Update the amountAdded field in the user document
         emailUser = await Users.findOneAndUpdate(
@@ -284,7 +284,7 @@ app.post("/response.html", async function (req, res) {
         //   }),
         // });
 
-        return res.send(`payment success`);
+        return res.render(__dirname + "/response.html", {amount: amount});
       // }
     // }, 2000);
   } else {

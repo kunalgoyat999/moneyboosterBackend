@@ -8,7 +8,8 @@ const { payment } = require('../controllers/payment');
 const { paymentPage } = require('../controllers/payment');
 const { forgotSendOtp } = require('../controllers/forgotSendOtp');
 const { refrel } = require('../controllers/refrel');
-
+const { withDrawAmount } = require('../controllers/withDrawlAmount');
+// withDrawAmount
 const router = express.Router();
 
 router.get('/getUser', loginUser );
@@ -19,5 +20,6 @@ router.post('/payment', payment);
 // router.post('/payment', paymentPage);
 router.post('/forgotSendOtp', forgotSendOtp);
 router.post('/refrel', refrel);
+router.post('/withDrawAmount', withDrawAmount);
 
 module.exports = router;

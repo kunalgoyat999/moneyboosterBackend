@@ -14,9 +14,9 @@ exports.postUserDetails = asyncHandler(async (req, res) => {
     req.body;
 
     const userDetails = await User.find({email});
-
+    let newUser;
     if(userDetails.length === 0) {
-        await User.create({
+        newUser = await User.create({
             name,
             email,
             phone,
@@ -25,8 +25,9 @@ exports.postUserDetails = asyncHandler(async (req, res) => {
             bankName,
             ifscCode,
         });
-
+        console.log("user", newUser._id)
         res.status(201).send({
+            id: newUser._id,
             success: true,
             message: 'Saved user details',
         });

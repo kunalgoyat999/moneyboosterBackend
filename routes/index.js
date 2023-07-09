@@ -9,6 +9,7 @@ const { paymentPage } = require('../controllers/payment');
 const { forgotSendOtp } = require('../controllers/forgotSendOtp');
 const { refrel } = require('../controllers/refrel');
 const { withDrawAmount } = require('../controllers/withDrawlAmount');
+const { buyplan } = require('../controllers/buyPlan');
 // withDrawAmount
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.post('/postUserDetails', postUserDetails);
 
 router.get('/homePage', homePage);
 router.post('/payment', payment);
+router.post('/buyplan', buyplan);
 // router.post('/payment', paymentPage);
 router.post('/forgotSendOtp', forgotSendOtp);
 router.post('/refrel', refrel);

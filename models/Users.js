@@ -32,6 +32,9 @@ const UserSchema = new mongoose.Schema(
         ifscCode: {
             type: String,
         },
+        plans: {
+            type: Object
+        },
         bankName: {
             type: String,
         },

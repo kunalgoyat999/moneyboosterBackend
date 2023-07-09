@@ -193,7 +193,6 @@ app.post("/response.html", async function (req, res) {
   });
 
   if (status === "success") {
-
     let emailUser = await Users.find({email: email});
     console.log("emailUser", emailUser, typeof amount);
     if (emailUser) {
@@ -204,91 +203,37 @@ app.post("/response.html", async function (req, res) {
         // Update the amountAdded field in the user document
         emailUser = await Users.findOneAndUpdate(
           { email: email },
-          { $set: { amounAdded: amount } },
+          { 
+            $set: { 
+              amounAdded: amount,
+              amountToBeUse: amount 
+            } 
+          },
           { new: true }
         );
       } else {
         let newAmount = parseFloat(emailUser[0].amounAdded);
-        console.log("newAmount1", newAmount)
         newAmount += numberAmount;
-        console.log("newAmount2", newAmount)
+
+        let assestAmount = parseFloat(emailUser[0].amountToBeUse);
+        assestAmount += numberAmount;
         // Update the amountAdded field in the user document
+        console.log("assestAmount", assestAmount, "typeof assestAmount", typeof assestAmount,"assestAmount.toString()", assestAmount.toString(), "typeof assestAmount.toString()", typeof assestAmount.toString())
         emailUser = await Users.findOneAndUpdate(
           { email: email },
-          { $set: { amounAdded: newAmount.toString() } },
+          {
+            $set: {
+              amounAdded: newAmount.toString(),
+              amountToBeUse: assestAmount.toString()
+            }
+          },
           { new: true }
         );
       }
-      
-
-    
       console.log("Updated user:", emailUser);
     }
-
-    // await fetch(`${config.production.baseUrl}/buyQuestions`, {
-    //   method: "post",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     TXNID: token,
-    //     emailTransactionID: txnid,
-    //     TXNAMOUNT: amount,
-    //     PAYMENTMODE: mode,
-    //     TXNDATE: txnDate,
-    //     QUESTIONS: questions,
-    //   }),
-    // });
-
-    // await fetch(`${config.production.baseUrl}/postUserDetails`, {
-    //   method: "post",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: firstname,
-    //     email,
-    //     state,
-    //     detailsFrom: 'PayU'
-    //   }),
-    // });
-
-    // await fetch(`${config.production.baseUrl}/referral`, {
-    //   method: "post",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     referralBy: udf1,
-    //     questions,
-    //     orderId: txnid
-    //   }),
-    // });
-
-    // setTimeout( async () => {
-    //   if (isTrue) {
-        // loggerSuccessTrafficAt40page.info(`successTraffic -- name = ${firstname} -- email = ${email} -- token = ${token}`);
-
-        // await fetch(`${config.production.baseUrl}/buyQuestions`, {
-        //   method: "post",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     TXNID: token,
-        //     emailTransactionID: txnid,
-        //     TXNAMOUNT: amount,
-        //     PAYMENTMODE: mode,
-        //     TXNDATE: txnDate,
-        //     QUESTIONS: questions,
-        //   }),
-        // });
-
-        return res.render(__dirname + "/response.html", {amount: amount});
-      // }
-    // }, 2000);
+    return res.render(__dirname + "/response.html", {amount: amount});
   } else {
-    // loggerLocalError.info(`pay40 -- Payment Failed -- txnid = ${txnid} -- amount = ${amount} -- email = ${email} -- mode = ${mode} -- state = ${state} -- resphash = ${resphash} -- calchash = ${calchash} -- key = ${key} -- command = ${command} -- `);
     return res.send(`payment fail`);
   }
 });

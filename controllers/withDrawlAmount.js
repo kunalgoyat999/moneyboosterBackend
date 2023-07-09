@@ -25,13 +25,13 @@
         let currentWithDrawAmount = findEmail[0].amountWithraw || 0
         currentWithDrawAmount = parseFloat(currentWithDrawAmount);
         console.log("currentWithDrawAmount1", currentWithDrawAmount)
-        currentWithDrawAmount += amount;
+        currentWithDrawAmount -= amount;
         console.log("currentWithDrawAmount2", currentWithDrawAmount)
 
         findEmail = await Users.findOneAndUpdate(
             { email: email },
             { $set: { 
-                    amountToBeUse: currentAmount.toString(),
+                    // amountToBeUse: currentAmount.toString(),
                     amountWithraw: currentWithDrawAmount.toString() 
                 } 
             },

@@ -10,6 +10,8 @@ const { forgotSendOtp } = require('../controllers/forgotSendOtp');
 const { refrel } = require('../controllers/refrel');
 const { withDrawAmount } = require('../controllers/withDrawlAmount');
 const { buyplan } = require('../controllers/buyPlan');
+const { updateProfile } = require('../controllers/updateProfile');
+const { updateBankInfo } = require('../controllers/updateBankInfo');
 // withDrawAmount
 const router = express.Router();
 
@@ -23,5 +25,7 @@ router.post('/buyplan', buyplan);
 router.post('/forgotSendOtp', forgotSendOtp);
 router.post('/refrel', refrel);
 router.post('/withDrawAmount', withDrawAmount);
+router.post('/updateProfile', updateProfile);
+router.post('/updateBankInfo', updateBankInfo);
 
 module.exports = router;

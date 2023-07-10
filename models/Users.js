@@ -32,11 +32,11 @@ const UserSchema = new mongoose.Schema(
         ifscCode: {
             type: String,
         },
-        plans: {
-            type: Object
-        },
         bankName: {
             type: String,
+        },
+        plans: {
+            type: Object
         },
         level1: {
             type: Array

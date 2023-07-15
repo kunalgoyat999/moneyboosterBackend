@@ -10,8 +10,8 @@ exports.updateBankInfo = asyncHandler(async (req, res) => {
   /** get data request body */
 
   /** get data from request body */
-  const {id, name, email, phone, bankName} = req.body;
-  console.log("req", req.body, )
+  const {id, ifsc_code, account_number, bankName} = req.body;
+  console.log("reqqqq", req.body)
 
     const userDetails = await User.findById(id);
     let newUser;
@@ -20,7 +20,10 @@ exports.updateBankInfo = asyncHandler(async (req, res) => {
             { _id: id },
             {
               $set: {
-                bankName: bankName
+                bankName: bankName,
+                ifscCode: ifsc_code,
+                accountNo:account_number
+
               }
             },
             { new: true });

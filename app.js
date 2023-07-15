@@ -215,17 +215,24 @@ app.post("/response.html", async function (req, res) {
         let newAmount = parseFloat(emailUser[0].amounAdded);
         newAmount += numberAmount;
 
-        let assestAmount = parseFloat(emailUser[0].amountToBeUse);
+        let assestAmount = parseFloat(emailUser[0].amountToBeUse) || 0;
         assestAmount += numberAmount;
         // Update the amountAdded field in the user document
         console.log("assestAmount", assestAmount, "typeof assestAmount", typeof assestAmount,"assestAmount.toString()", assestAmount.toString(), "typeof assestAmount.toString()", typeof assestAmount.toString())
+        const currentDate = new Date();
+        let recharge = {
+          type: "Recharge",
+          date: currentDate,
+          amount: numberAmount
+        }
         emailUser = await Users.findOneAndUpdate(
           { email: email },
           {
             $set: {
               amounAdded: newAmount.toString(),
-              amountToBeUse: assestAmount.toString()
-            }
+              amountToBeUse: assestAmount.toString(),
+            },
+            $push: { accountRecord: recharge }
           },
           { new: true }
         );

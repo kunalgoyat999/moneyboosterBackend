@@ -27,13 +27,19 @@
         console.log("currentWithDrawAmount1", currentWithDrawAmount)
         currentWithDrawAmount -= amount;
         console.log("currentWithDrawAmount2", currentWithDrawAmount)
-
+        const currentDate = new Date();
+        let recharge = {
+          type: "Withdraw",
+          date: currentDate,
+          amount: amount
+        }
         findEmail = await Users.findOneAndUpdate(
             { email: email },
             { $set: { 
                     // amountToBeUse: currentAmount.toString(),
-                    amountWithraw: currentWithDrawAmount.toString() 
-                } 
+                    amountWithraw: currentWithDrawAmount.toString(),
+                },
+                $push: { accountRecord: recharge }
             },
             { new: true }
           );

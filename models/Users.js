@@ -35,6 +35,9 @@ const UserSchema = new mongoose.Schema(
         bankName: {
             type: String,
         },
+        accountRecord: {
+            type: Array,
+        },
         plans: {
             type: Object
         },

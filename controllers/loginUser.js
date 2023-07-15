@@ -30,6 +30,8 @@ const jwt = require('jsonwebtoken');
             message: 'No user Found',
         });
     } else {
+        console.log("userDetails._id", userDetails._id)
+        const token = generateToken(userDetails._id); 
         res.status(200).send({
             success: true,
             userDetails: userDetails[0],

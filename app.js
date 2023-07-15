@@ -24,12 +24,11 @@ const userDetails = require('./routes/index')
 const app = express();
 
 /** add body-parser to app.js */
-// app.use(
-//   cors({
-//     origin: ['https://trabko.com', 'https://workdone.trabko.com'],
-//   })
-// )
-app.use(cors());
+app.use(
+  cors({
+    origin: ['https://moneybooster.netlify.app'],
+  })
+)
 
 
 app.use(bodyParser.urlencoded({ extended: true }));

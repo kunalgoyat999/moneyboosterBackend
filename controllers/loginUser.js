@@ -23,14 +23,13 @@ const jwt = require('jsonwebtoken');
 
      const userDetails = await Users.find({ email, password});
      console.log("userDetails", userDetails);
-     
+
     if(userDetails.length === 0) {
         res.status(400).send({
             success: false,
             message: 'No user Found',
         });
     } else {
-        const token = generateToken(userDetails._id);
         res.status(200).send({
             success: true,
             userDetails: userDetails[0],

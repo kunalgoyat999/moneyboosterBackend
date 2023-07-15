@@ -22,7 +22,8 @@ const jwt = require('jsonwebtoken');
      } = req.query;
 
      const userDetails = await Users.find({ email, password});
-
+     console.log("userDetails", userDetails);
+     
     if(userDetails.length === 0) {
         res.status(400).send({
             success: false,

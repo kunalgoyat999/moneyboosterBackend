@@ -26,7 +26,7 @@ const app = express();
 /** add body-parser to app.js */
 app.use(
   cors({
-    origin: ['https://moneybooster.netlify.app'],
+    origin: ['https://moneybooster.netlify.app', 'http://localhost:3000'],
   })
 )
 

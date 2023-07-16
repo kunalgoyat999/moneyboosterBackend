@@ -24,12 +24,13 @@ const userDetails = require('./routes/index')
 const app = express();
 
 /** add body-parser to app.js */
-app.use(
-  cors({
-    origin: ['https://moneybooster.netlify.app', 'http://localhost:3000'],
-  })
-)
+// app.use(
+//   cors({
+//     origin: ['https://moneybooster.netlify.app', 'http://localhost:3000'],
+//   })
+// )
 
+app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: "mcg001k", saveUninitialized: true, resave: true }));

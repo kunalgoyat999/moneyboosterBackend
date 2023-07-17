@@ -53,12 +53,12 @@
                     <input type="hidden" id="udf2" name="udf2" value="" />
 
                     <!-- Required - Response callback url to be used by Payment Gateway to post back payment status. surl - for success tranction, furl - for failure transaction, curl - for cancel transaction. //-->
-                    <input type="hidden" id="surl" name="surl" value="http://localhost:3330/response.html" />
+                    <!-- <input type="hidden" id="surl" name="surl" value="http://localhost:3330/response.html" />
                     <input type="hidden" id="furl" name="furl" value="http://localhost:3330/response.html" />
-                    <input type="hidden" id="curl" name="curl" value="http://localhost:3330/response.html" />
-                    <!-- <input type="hidden" id="surl" name="surl" value="https://trabko.com/response.html" />
-                    <input type="hidden" id="furl" name="furl" value="https://trabko.com/response.html" />
-                    <input type="hidden" id="curl" name="curl" value="https://trabko.com/response.html" /> --> 
+                    <input type="hidden" id="curl" name="curl" value="http://localhost:3330/response.html" /> -->
+                    <input type="hidden" id="surl" name="surl" value="https://cashbooster.info/response.html" />
+                    <input type="hidden" id="furl" name="furl" value="https://cashbooster.info/response.html" />
+                    <input type="hidden" id="curl" name="curl" value="https://cashbooster.info/response.html" /> 
                     <input type="hidden" id="key" name="key" value="<%= key %>" />
                     
                     <!-- This is required only in payU Money -->
@@ -157,8 +157,8 @@
             }
 
             $.ajax({
-                url: `http://localhost:3330/pay`,
-                // url: 'https://trabko.com/pay',
+                // url: `http://localhost:3330/pay`,
+                url: 'https://cashbooster.info/pay',
                 type: 'post',
                 data: JSON.stringify({
                     txnid: $('#txnid').val(),
@@ -215,7 +215,7 @@
         let data = {
             email: email
         }
-        fetch("http://localhost:3330/api/v1/userDetails/payment", {
+        fetch("https://cashbooster.info/api/v1/userDetails/payment", {
             method: "POST",
             headers: {
             "Content-Type": "application/json",

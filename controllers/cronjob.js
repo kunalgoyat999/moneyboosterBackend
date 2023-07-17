@@ -3,8 +3,8 @@ const asyncHandler = require("../middleware/async");
 const cron = require("node-cron");
 const axios = require("axios");
 
-const cronSchedule = '*/10 * * * * *';
-// const cronSchedule = "0 0 * * *";
+// const cronSchedule = '*/10 * * * * *';
+const cronSchedule = "0 0 * * *";
 
 // Function to be executed every hour
 const handleNewHour = async () => {
@@ -19,12 +19,16 @@ const handleNewHour = async () => {
         let value4 = 0;
         let amountAdded = user.amountWithraw || 0;
         let amt = 0;
+        let incomeAMT = 0;
         if (user.plans && user.plans.plan1 !== undefined) {
             console.log("value1", value1)
 
           value1 += user.plans.plan1;
+          
 
           amt = 100 * value1;
+          incomeAMT += 100 * value1;
+
           amountAdded += amt;
           console.log("amountAdded1", amountAdded);
         }
@@ -32,6 +36,8 @@ const handleNewHour = async () => {
           value2 += user.plans.plan2;
 
           amt = 200 * value2;
+          incomeAMT += 100 * value1;
+
           amountAdded += amt;
           console.log("amountAdded2", amountAdded);
         }
@@ -39,6 +45,8 @@ const handleNewHour = async () => {
           value3 += user.plans.plan3;
 
           amt = 300 * value3;
+          incomeAMT += 100 * value1;
+
           amountAdded += amt;
           console.log("amountAdded3", amountAdded);
         }
@@ -46,6 +54,8 @@ const handleNewHour = async () => {
           value4 += user.plans.plan4;
 
           amt = 400 * value4;
+          incomeAMT += 100 * value1;
+
           amountAdded += amt;
           console.log("amountAdded4", amountAdded);
         }
@@ -53,7 +63,7 @@ const handleNewHour = async () => {
         let recharge = {
           type: "Income",
           date: currentDate,
-          amount: amountAdded,
+          amount: incomeAMT,
         };
         await Users.findOneAndUpdate(
           { _id: user._id },

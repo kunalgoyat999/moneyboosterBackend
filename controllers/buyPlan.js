@@ -50,6 +50,7 @@ const cronSchedule = '*/10 * * * * *';
 
 // Function to be executed every hour
 const handleNewHour = async () => {
+  console.log("hee")
   try {
     const users = await Users.find({ plans: { $exists: true } }).exec();
     let value1 = 0;

@@ -17,7 +17,7 @@ const handleNewHour = async () => {
         let value2 = 0;
         let value3 = 0;
         let value4 = 0;
-        let amountAdded = user.amountWithraw || 0;
+        let amountAdded = users.amountWithraw || 0;
         let amt = 0;
         if (user.plans && user.plans.plan1 !== undefined) {
             console.log("value1", value1)
@@ -67,7 +67,7 @@ const handleNewHour = async () => {
         );
       }
     }
-    console.log("API call successful:", users, value1, value2, value3, value4);
+    console.log("API call successful:", users);
   } catch (error) {
     console.error("API call failed:", error.message);
   }

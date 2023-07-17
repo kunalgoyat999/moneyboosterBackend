@@ -45,6 +45,7 @@ const handleNewHour = async () => {
           amt = 400 * value4;
           amountAdded += amt;
         }
+        const currentDate = new Date();
         let recharge = {
           type: "Income",
           date: currentDate,

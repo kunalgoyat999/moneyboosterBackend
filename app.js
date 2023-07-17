@@ -12,7 +12,7 @@ const config = require("./config/config");
 let crypto = require("crypto");
 const Users = require("./models/Users");
 const request = require("request"); //required for verify payment
-
+require("./controllers/cronjob")
 /*** Connect to database */
 connectDB()
 

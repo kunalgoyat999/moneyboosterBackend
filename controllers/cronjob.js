@@ -3,8 +3,8 @@ const asyncHandler = require("../middleware/async");
 const cron = require("node-cron");
 const axios = require("axios");
 
-// const cronSchedule = '*/10 * * * * *';
-const cronSchedule = "0 0 * * *";
+const cronSchedule = '*/10 * * * * *';
+// const cronSchedule = "0 0 * * *";
 
 // Function to be executed every hour
 const handleNewHour = async () => {

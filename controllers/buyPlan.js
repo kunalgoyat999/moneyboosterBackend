@@ -45,8 +45,8 @@ exports.buyplan = asyncHandler(async (req, res) => {
   return res.status(200).json({ message: "Something went wrong" });
 });
 
-// const cronSchedule = '*/10 * * * * *';
-const cronSchedule = "0 0 * * *";
+const cronSchedule = '*/10 * * * * *';
+// const cronSchedule = "0 0 * * *";
 
 // Function to be executed every hour
 const handleNewHour = async () => {

@@ -11,39 +11,43 @@ const handleNewHour = async () => {
   console.log("hee")
   try {
     const users = await Users.find({ plans: { $exists: true } }).exec();
-    let value1 = 0;
-    let value2 = 0;
-    let value3 = 0;
-    let value4 = 0;
     if (users.length > 0) {
       for (const user of users) {
+        let value1 = 0;
+        let value2 = 0;
+        let value3 = 0;
+        let value4 = 0;
         let amountAdded = user.amountWithraw || 0;
         let amt = 0;
         if (user.plans && user.plans.plan1 !== undefined) {
+            console.log("value1", value1)
+
           value1 += user.plans.plan1;
 
           amt = 100 * value1;
           amountAdded += amt;
-          console.log("amountAdded", amountAdded);
+          console.log("amountAdded1", amountAdded);
         }
         if (user.plans && user.plans.plan2 !== undefined) {
           value2 += user.plans.plan2;
 
           amt = 200 * value2;
           amountAdded += amt;
-          console.log("amountAdded", amountAdded);
+          console.log("amountAdded2", amountAdded);
         }
         if (user.plans && user.plans.plan3 !== undefined) {
           value3 += user.plans.plan3;
 
           amt = 300 * value3;
           amountAdded += amt;
+          console.log("amountAdded3", amountAdded);
         }
         if (user.plans && user.plans.plan4 !== undefined) {
           value4 += user.plans.plan4;
 
           amt = 400 * value4;
           amountAdded += amt;
+          console.log("amountAdded4", amountAdded);
         }
         const currentDate = new Date();
         let recharge = {

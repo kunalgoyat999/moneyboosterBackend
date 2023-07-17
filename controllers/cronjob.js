@@ -17,6 +17,7 @@ const handleNewHour = async () => {
         let value2 = 0;
         let value3 = 0;
         let value4 = 0;
+        let value5 = 0;
         let amountAdded = user.amountWithraw || 0;
         let amt = 0;
         let incomeAMT = 0;
@@ -26,8 +27,8 @@ const handleNewHour = async () => {
           value1 += user.plans.plan1;
           
 
-          amt = 100 * value1;
-          incomeAMT += 100 * value1;
+          amt = 110 * value1;
+          incomeAMT += 110 * value1;
 
           amountAdded += amt;
           console.log("amountAdded1", amountAdded);
@@ -35,8 +36,8 @@ const handleNewHour = async () => {
         if (user.plans && user.plans.plan2 !== undefined) {
           value2 += user.plans.plan2;
 
-          amt = 200 * value2;
-          incomeAMT += 100 * value1;
+          amt = 430 * value2;
+          incomeAMT += 430 * value1;
 
           amountAdded += amt;
           console.log("amountAdded2", amountAdded);
@@ -44,8 +45,8 @@ const handleNewHour = async () => {
         if (user.plans && user.plans.plan3 !== undefined) {
           value3 += user.plans.plan3;
 
-          amt = 300 * value3;
-          incomeAMT += 100 * value1;
+          amt = 1313 * value3;
+          incomeAMT += 1313 * value1;
 
           amountAdded += amt;
           console.log("amountAdded3", amountAdded);
@@ -53,12 +54,21 @@ const handleNewHour = async () => {
         if (user.plans && user.plans.plan4 !== undefined) {
           value4 += user.plans.plan4;
 
-          amt = 400 * value4;
-          incomeAMT += 100 * value1;
+          amt = 4029 * value4;
+          incomeAMT += 4029 * value1;
 
           amountAdded += amt;
           console.log("amountAdded4", amountAdded);
         }
+        if (user.plans && user.plans.plan5 !== undefined) {
+            value5 += user.plans.plan5;
+  
+            amt = 8375 * value5;
+            incomeAMT += 8375 * value5;
+  
+            amountAdded += amt;
+            console.log("amountAdded5", amountAdded);
+          }
         const currentDate = new Date();
         let recharge = {
           type: "Income",

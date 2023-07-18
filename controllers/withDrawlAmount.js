@@ -17,16 +17,13 @@
       console.log("findEmail", findEmail);
 
       if(findEmail.length !==0 ){
-        let currentAmount = parseFloat(findEmail[0].amountToBeUse);
-        console.log("newAmount1", currentAmount)
-        currentAmount -= amount;
-        console.log("newAmount2", currentAmount)
 
         let currentWithDrawAmount = findEmail[0].amountWithraw || 0
         currentWithDrawAmount = parseFloat(currentWithDrawAmount);
-        console.log("currentWithDrawAmount1", currentWithDrawAmount)
         currentWithDrawAmount -= amount;
-        console.log("currentWithDrawAmount2", currentWithDrawAmount)
+
+        let tenPercent = amount / 10;
+        amount = amount - tenPercent;
         const currentDate = new Date();
         let recharge = {
           type: "Withdraw",

@@ -196,7 +196,7 @@ app.post("/response.html", async function (req, res) {
   if (status === "success") {
     let emailUser = await Users.find({email: email});
     console.log("emailUser", emailUser, typeof amount);
-    if (emailUser) {
+    if (emailUser.length > 0) {
       let numberAmount = parseFloat(amount);
 
        // Calculate the new amount

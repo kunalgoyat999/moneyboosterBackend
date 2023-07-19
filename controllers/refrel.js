@@ -6,6 +6,8 @@ const ObjectId = mongoose.Types.ObjectId;
 exports.refrel = asyncHandler(async (req, res) => {
   const newUser = req.body.id;
   const id = req.body.refered_id;
+  console.log("newUser", newUser, "id", id);
+  
   let userDetails;
   if (mongoose.isValidObjectId(id)) {
     userDetails = await Users.findById(id);

@@ -22,10 +22,10 @@ exports.refrel = asyncHandler(async (req, res) => {
       await Users.findOneAndUpdate(
         { _id: id },
         {
-          $push: { level1: newUser },
-          $set: {
-            amountWithraw: currentWithDrawAmount.toString(),
-          },
+          $push: { level1: newUser }
+          // $set: {
+          //   amountWithraw: currentWithDrawAmount.toString(),
+          // },
         },
         { new: true }
       );
@@ -38,10 +38,10 @@ exports.refrel = asyncHandler(async (req, res) => {
         await Users.findOneAndUpdate(
           { level1: id },
           {
-            $push: { level2: newUser },
-            $set: {
-              amountWithraw: currentWithDrawAmount2.toString(),
-            },
+            $push: { level2: newUser }
+            // $set: {
+            //   amountWithraw: currentWithDrawAmount2.toString(),
+            // },
           },
           { new: true }
         );
@@ -54,10 +54,10 @@ exports.refrel = asyncHandler(async (req, res) => {
           await Users.findOneAndUpdate(
             { level2: id },
             {
-              $push: { level3: newUser },
-              $set: {
-                amountWithraw: currentWithDrawAmount3.toString(),
-              },
+              $push: { level3: newUser }
+              // $set: {
+              //   amountWithraw: currentWithDrawAmount3.toString(),
+              // },
             },
             { new: true }
           );

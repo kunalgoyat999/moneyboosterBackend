@@ -11,6 +11,7 @@ const uniqid = require('uniqid');
 const config = require("./config/config");
 let crypto = require("crypto");
 const Users = require("./models/Users");
+const axios = require('axios');
 const request = require("request"); //required for verify payment
 require("./controllers/cronjob")
 /*** Connect to database */
@@ -211,6 +212,22 @@ app.post("/response.html", async function (req, res) {
           },
           { new: true }
         );
+
+
+        const url = 'https://cashbooster.info/api/v1/userDetails/refrelAmountAdded'; // Replace with the API endpoint URL
+        const data = {
+          id: emailUser._id
+        };
+        console.log("data", data)
+
+        axios.post(url, data)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+        
       } else {
         let newAmount = parseFloat(emailUser[0].amounAdded);
         newAmount += numberAmount;

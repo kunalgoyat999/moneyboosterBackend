@@ -63,15 +63,19 @@ exports.refrelAmountAdded = asyncHandler(async (req, res) => {
         );
         return res.status(201).json({
           message:
-            "New User added, shared user Present at another of level 1, so that added at all 3 level",
+            "all three level",
         });
       }
       return res.status(201).json({
         message:
-          "New user added, shared user Present at another of level 1, but not added in all 3",
+          "level 2 present",
       });
-    }
 
+    }
+    return res.status(201).json({
+        message:
+          "Only 1 level present",
+      });
     //   let userLevel2Details = await Users.find({ level2: id });
     //   console.log("11", userLevel2Details);
     //   if (userLevel2Details.length !== 0) {
